@@ -65,6 +65,9 @@ class JsonParser {
     } else {
       userObject = "invalid json format";
     }
+    if (userObject == "invalid json format") {
+      return "invalid json format";
+    }
     return createFromJson(
         "class $nameOfObject{\n\n$userObject\n$nameOfObject(${makeRequired ? "{" : ''}${constructor.substring(0, constructor.length - 2)}${makeRequired ? "}" : ''});\n");
   }

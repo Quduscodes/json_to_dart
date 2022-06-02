@@ -175,31 +175,37 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.circular(5.sp)),
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: InkWell(
-                              onTap: () {
-                                if (dartObj != invalidJson) {
-                                  Clipboard.setData(
-                                      ClipboardData(text: dartObj));
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 2.h),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: dartObj == invalidJson
+                              ? Colors.black38
+                              : Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(5.sp)),
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: InkWell(
+                            onTap: () {
+                              if (dartObj != invalidJson) {
+                                Clipboard.setData(ClipboardData(text: dartObj));
+                              }
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 2.0.h),
+                              child: Center(
                                 child: Text(
                                   "Copy Dart object to clipboard",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 12.sp),
                                 ),
-                              )),
-                        ),
+                              ),
+                            )),
                       ),
-                    ],
-                  )
+                    ),
+                  ),
                 ],
               ),
             ),
