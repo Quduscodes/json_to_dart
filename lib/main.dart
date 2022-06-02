@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TextField(
                       controller: objectTitleController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: "Enter name of Dart class")),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -118,32 +118,88 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Row(
                     children: [
-                      Checkbox(
-                          value: makeRequired,
-                          onChanged: (bool? val) {
-                            setState(() {
-                              makeRequired = val!;
-                            });
-                          }),
-                      const Text("Make Fields required?")
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(5.sp)),
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: InkWell(
+                              onTap: () {
+                                if (jsonTextController.text.isNotEmpty ||
+                                    objectTitleController.text.isNotEmpty) {
+                                  final parser = JsonParser(
+                                      jsonTextController.text,
+                                      objectTitleController.text,
+                                      makeRequired);
+                                  setState(() {
+                                    dartObj = parser.convertToDartObject();
+                                  });
+                                } else {
+                                  setState(() {
+                                    dartObj = invalidJson;
+                                  });
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  "Generate Dart",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12.sp),
+                                ),
+                              )),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                                value: makeRequired,
+                                onChanged: (bool? val) {
+                                  setState(() {
+                                    makeRequired = val!;
+                                  });
+                                }),
+                            Text(
+                              "Make Fields required?",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.blueAccent,
+                            borderRadius: BorderRadius.circular(5.sp)),
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: InkWell(
+                              onTap: () {
+                                if (dartObj != invalidJson) {
+                                  Clipboard.setData(
+                                      ClipboardData(text: dartObj));
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  "Copy Dart object to clipboard",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12.sp),
+                                ),
+                              )),
+                        ),
+                      ),
                     ],
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        if (jsonTextController.text.isNotEmpty ||
-                            objectTitleController.text.isNotEmpty) {
-                          final parser = JsonParser(jsonTextController.text,
-                              objectTitleController.text, makeRequired);
-                          setState(() {
-                            dartObj = parser.convertToDartObject();
-                          });
-                        } else {
-                          setState(() {
-                            dartObj = invalidJson;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.add))
+                  )
                 ],
               ),
             ),
