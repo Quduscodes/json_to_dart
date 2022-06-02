@@ -69,7 +69,7 @@ class JsonParser {
       return "invalid json format";
     }
     return createFromJson(
-        "class $nameOfObject{\n\n$userObject\n$nameOfObject(${makeRequired ? "{" : ''}${constructor.substring(0, constructor.length - 2)}${makeRequired ? "}" : ''});\n");
+        "class $nameOfObject{\n$userObject\n$nameOfObject(${makeRequired ? "{" : ''}${constructor.substring(0, constructor.length - 2)}${makeRequired ? "}" : ''});\n");
   }
 
   createFromJson(String obj) {
@@ -93,8 +93,6 @@ class JsonParser {
               if (element.runtimeType.toString() == hashedLinkType) {
                 String internalObjName =
                     "${key[0].toString().toUpperCase()}${key.toString().substring(1)}";
-                final JsonParser internalObj = JsonParser(
-                    jsonEncode(element), internalObjName, makeRequired);
                 secondType = internalObjName;
                 break;
               } else if (element.runtimeType != type) {
@@ -150,8 +148,6 @@ class JsonParser {
               if (element.runtimeType.toString() == hashedLinkType) {
                 String internalObjName =
                     "${key[0].toString().toUpperCase()}${key.toString().substring(1)}";
-                final JsonParser internalObj = JsonParser(
-                    jsonEncode(element), internalObjName, makeRequired);
                 secondType = internalObjName;
                 break;
               } else if (element.runtimeType != type) {
@@ -179,6 +175,6 @@ class JsonParser {
     } else {
       toJson = "";
     }
-    return "$obj$toJsonTemplate$toJson return data;\n}\n}\n${objects.join()}";
+    return "$obj$toJsonTemplate$toJson return data;\n}\n}\n\n${objects.join("\n")}";
   }
 }

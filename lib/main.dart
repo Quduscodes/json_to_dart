@@ -101,21 +101,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: objectTitleController,
                       decoration: const InputDecoration(
                           hintText: "Enter name of Dart class")),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: InkWell(
-                        onTap: () {
-                          Clipboard.setData(ClipboardData(text: dartObj));
-                        },
+                  if (dartObj.isNotEmpty)
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0.h),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.black26)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 2.0.h, horizontal: 3.0.w),
                         child: Text(
                           dartObj,
                           style: TextStyle(
-                              fontSize: 11.sp,
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
                               color: dartObj == invalidJson
                                   ? Colors.red
                                   : Colors.black),
-                        )),
-                  ),
+                        ),
+                      ),
+                    ),
+                  SizedBox(height: 1.h),
                   Row(
                     children: [
                       Container(
